@@ -7,8 +7,11 @@ CrossSell$DupKey <- paste(CrossSell$VIN, CrossSell$MON, sep="_")
 CrossSell = CrossSell[!duplicated(CrossSell$DupKey), ]
 table(CrossSell$MON)
 
+names(CrossSell)
+
 #Appending New Month
 CrossSell$X <- NULL
+CrossSell$X.1 <- NULL
 CrossSellNewAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201604/CA1803.txt", header=TRUE, sep="\t")
 CrossSellOldAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201604/CA1124U.txt", header=TRUE, sep="\t")
 CrossSellOldAppend$NewUsed <- "Used"
