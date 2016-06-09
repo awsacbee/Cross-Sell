@@ -12,8 +12,8 @@ names(CrossSell)
 #Appending New Month
 CrossSell$X <- NULL
 CrossSell$X.1 <- NULL
-CrossSellNewAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201604/CA1803.txt", header=TRUE, sep="\t")
-CrossSellOldAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201604/CA1124U.txt", header=TRUE, sep="\t")
+CrossSellNewAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201605/CA1803.txt", header=TRUE, sep="\t")
+CrossSellOldAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201605/CA1124U.txt", header=TRUE, sep="\t")
 CrossSellOldAppend$NewUsed <- "Used"
 CrossSellNewAppend$NewUsed <- "New"
 
@@ -22,7 +22,7 @@ library("plyr")
 CrossSell <- rbind.fill(CrossSell, CrossSellNewAppend, CrossSellOldAppend)
 #Re-save to update master copy
 table(CrossSell$MON) # Check for dupes!
-write.csv(CrossSell, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CSMaster.txt", sep=",")
+write.csv(CrossSell, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CSMaster.txt")
 
 #Clean up spaces in WGT field
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
