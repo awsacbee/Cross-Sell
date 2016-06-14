@@ -95,6 +95,6 @@ write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal 
 
 
 ### Folsom Lake Honda only
-table(grep("Folsom Lake", CrossSellRefined$SELLER, ignore.case=T, value=T))
-head(CrossSellRefined[CrossSellRefined$SELLER=="FOLSOM LAKE HONDA",])
-write.csv(CrossSellRefined[CrossSellRefined$SELLER=="FOLSOM LAKE HONDA",], "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/Tableau/Folsom Lake Honda/FLH.csv")
+#table(grep("Folsom Lake", CrossSellRefined$SELLER, ignore.case=T, value=T))
+#head(CrossSellRefined[CrossSellRefined$SELLER=="FOLSOM LAKE HONDA",])
+#write.csv(CrossSellRefined[CrossSellRefined$SELLER=="FOLSOM LAKE HONDA",], "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/Tableau/Folsom Lake Honda/FLH.csv")
