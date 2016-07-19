@@ -1,5 +1,4 @@
-#CrossSell <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CSMaster.txt", header=TRUE, sep=",")
-CrossSell <- CSMaster  
+CrossSell <- read.csv("~/Anna Welden/Cross-Sell/Data/CSMaster.txt")
 
 head(CrossSell)
 #Create unique indicator
@@ -14,11 +13,9 @@ names(CrossSell)
 #Appending New Month
 CrossSell$X <- NULL
 CrossSell$X.1 <- NULL
-#CrossSellNewAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201605/CA1803.txt", header=TRUE, sep="\t")
-#CrossSellOldAppend <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DBF/201605/CA1124U.txt", header=TRUE, sep="\t")
 
-CrossSellNewAppend <- CA1803
-CrossSellOldAppend <- CA1124U
+CrossSellNewAppend <- read.delim("~/Anna Welden/Cross-Sell/Data/CA1803.txt")
+CrossSellOldAppend <- read.delim("~/Anna Welden/Cross-Sell/Data/CA1124U.txt")
 
 CrossSellOldAppend$NewUsed <- "Used"
 CrossSellNewAppend$NewUsed <- "New"
@@ -28,8 +25,7 @@ library("plyr")
 CrossSell <- rbind.fill(CrossSell, CrossSellNewAppend, CrossSellOldAppend)
 #Re-save to update master copy
 table(CrossSell$MON) # Check for dupes!
-#write.csv(CrossSell, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CSMaster.txt")
-write.csv(CrossSell, "Data/CSMaster.txt")
+write.csv(CrossSell, "~/Anna Welden/Cross-Sell/Data/Data/CSMaster.txt")
 
 #Clean up spaces in WGT field
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
@@ -54,7 +50,8 @@ CrossSellRefined$Geography <- ifelse(CrossSellRefined$COUNTYNUM %in% CountiesinC
 table(CrossSellRefined$Geography) #DMA=1, CBSA=2 - they overlap
 
 #Remove PO Box Zip Codes, replace with Enclosing zips
-POBoxZipMatches <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/POBoxeswithEnclosingZipsSacDMA.txt", header=TRUE, sep=",")
+POBoxZipMatches <- read.csv("~/Anna Welden/Cross-Sell/Data/POBoxeswithEnclosingZipsSacDMA.txt")
+
 CrossSellRefined <- merge(CrossSellRefined, POBoxZipMatches, by.x = "ZIP", by.y = "Zip_Code", all.x = TRUE)
 CrossSellRefined$NewZips <- NA
 CrossSellRefined$NewZips <- ifelse(is.na(CrossSellRefined$Enclosing_Zip) == FALSE , CrossSellRefined$Enclosing_Zip, CrossSellRefined$ZIP)
@@ -68,7 +65,7 @@ CrossSellRefined$PUMPS <-NULL
 CrossSellRefined$OWNER <-NULL
 CrossSellRefined$ADDRESS <-NULL
 CrossSellRefined$LIENHOLDER <-NULL
-CrossSellRefined$ODOM_C <-NULL
+CrossSellRefined$ODOM_C <-NULL 
 CrossSellRefined$ODOMETER <-NULL
 CrossSellRefined$ID <-NULL
 CrossSellRefined$DupKey <-NULL
@@ -83,13 +80,14 @@ CrossSellRefined$SELLER[CrossSellRefined$SELLER == "MAITAS NISSAN OF SACRAMENTO"
 
 #Add in Lat/Long for Dealers
 #ZipCenter <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/Ziplistlatitude.txt", header=TRUE, sep="\t")
-ZipCenter <- ziplistlatitude
+ZipCenter <- read.csv("~/Anna Welden/Cross-Sell/Data/ziplistlatitude.txt", header=TRUE, sep="\t")
 
 CrossSellRefined <- merge(CrossSellRefined, ZipCenter, by.x = "ZIP", by.y = "zip.code", all.x = TRUE)
 
 
 #Add in Count of Cars sold for mapping test
 #DealerLocation <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/DealerLocation.txt", header=TRUE, sep="\t")
+DealerLocation <- read.delim("~/Anna Welden/Cross-Sell/Data/DealerLocation.txt", header=TRUE, sep="\t")
 
 head(DealerLocation)
 CrossSellRefined["CarCount"]<-1
@@ -102,4 +100,4 @@ CrossSellRefined$Geography[CrossSellRefined$RecordType == "Location"] <- 2
 
 #Export Results
 #write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CrossSellThroughMAY2015withFleet.csv")
-write.csv(CrossSellRefined, "Data/CrossSellThroughMAY2015withFleet.csv")
+write.csv(CrossSellRefined, "~/Anna Welden/Cross-Sell/Data/CrossSellThroughMAY2015withFleet.csv")
