@@ -1,4 +1,4 @@
-CrossSell <- read.csv("~/Anna Welden/Cross-Sell/Data/CSMaster.txt")
+CrossSell <- read.csv("~/Data/Cross Sell/Data/CSMaster.txt")
 
 head(CrossSell)
 #Create unique indicator
@@ -14,8 +14,8 @@ names(CrossSell)
 CrossSell$X <- NULL
 CrossSell$X.1 <- NULL
 
-CrossSellNewAppend <- read.delim("~/Anna Welden/Cross-Sell/Data/CA1803.txt")
-CrossSellOldAppend <- read.delim("~/Anna Welden/Cross-Sell/Data/CA1124U.txt")
+CrossSellNewAppend <- read.delim("~/Data/Cross Sell/Data/CA1803.txt")
+CrossSellOldAppend <- read.delim("~/Data/Cross Sell/Data/CA1124U.txt")
 
 CrossSellOldAppend$NewUsed <- "Used"
 CrossSellNewAppend$NewUsed <- "New"
@@ -25,7 +25,7 @@ library("plyr")
 CrossSell <- rbind.fill(CrossSell, CrossSellNewAppend, CrossSellOldAppend)
 #Re-save to update master copy
 table(CrossSell$MON) # Check for dupes!
-write.csv(CrossSell, "~/Anna Welden/Cross-Sell/Data/Data/CSMaster.txt")
+write.csv(CrossSell, "~/Data/Cross Sell/Data/CSMaster.txt")
 
 #Clean up spaces in WGT field
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
