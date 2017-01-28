@@ -77,6 +77,12 @@ CrossSellRefined$DupKey <-NULL
 #Combine old and new dealer names
 CrossSellRefined$SELLER <- as.character(CrossSellRefined$SELLER)
 CrossSellRefined$SELLER[CrossSellRefined$SELLER == "MAITAS NISSAN OF SACRAMENTO"] <- "NISSAN OF SACRAMENTO"
+CrossSellRefined$SELLER[CrossSellRefined$SELLER == "NIELLO ACURA"] <- "NIELLO ACURA - NIELLO VOLVO SACRAMENTO"
+CrossSellRefined$SELLER[CrossSellRefined$SELLER == "NIELLO AUDI"] <- "NIELLO AUDI LAND ROVER JAGUAR SACRAMENTO"
+CrossSellRefined$SELLER[CrossSellRefined$SELLER == "LASHER AUDI"] <- "ELK GROVE AUDI"
+CrossSellRefined$SELLER[CrossSellRefined$SELLER == "ELK GROVE BUICK PONTIAC GMC"] <- "ELK GROVE BUICK GMC"
+
+
 
 #Add in Lat/Long for Dealers
 #ZipCenter <- read.delim("C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/Ziplistlatitude.txt", header=TRUE, sep="\t")
@@ -98,8 +104,64 @@ DealerLocation["RecordType"] <- "Location"
 CrossSellRefined <- merge(CrossSellRefined, DealerLocation, c("RecordType", "Latitude", "Longitude"), all = TRUE)
 CrossSellRefined$Geography[CrossSellRefined$RecordType == "Location"] <- 2
 
+#create dealer groups
+Roseville.Auto.Mall <- c("NIELLO ACURA - NIELLO VOLVO SACRAMENTO", 
+                         "AUTONATION BMW ROSEVILLE", 
+                         "RELIABLE BUICK GMC CADILLAC", 
+                         "JOHN L SULLIVAN CHEVROLET", 
+                         "AUTONATION CHRY DODGE JEEP RAM ROSEVILLE", 
+                         "AUTONATION FIAT ROSEVILLE",
+                         "FUTURE FORD OF ROSEVILLE", 
+                         "AUTONATION HONDA ROSEVILLE", 
+                         "ROSEVILLE MITSUBISHI KIA", 
+                         "LEXUS OF ROSEVILLE",
+                         "AUTONATION MAZDA SUBARU ROSEVILLE",
+                         "ROSEVILLE VOLKSWAGEN",
+                         "FUTURE NISSAN",
+                         "SACRAMENTO INFINITI",
+                         "ROSEVILLE TOYOTA")
+
+Folsom.Auto.Mall <- c("FOLSOM LAKE HYUNDAI", 
+                      "FOLSOM LAKE TOYOTA", 
+                      "FOLSOM LAKE HONDA",
+                      "FOLSOM CHEVROLET",
+                      "FOLSOM LAKE FORD",
+                      "FOLSOM LAKE KIA",
+                      "FUTURE NISSAN OF FOLSOM",
+                      "FOLSOM BUICK GMC",
+                      "FOLSOM LAKE VOLKSWAGEN",
+                      "FOLSOM LAKE CHRYSLER DODGE JEEP RAM")
+
+Elk.Grove.Auto.Mall <- c("MAITA CHEVROLET",
+                        "ELK GROVE HONDA",
+                        "ELK GROVE KIA",
+                        "MAZDA OF ELK GROVE",
+                        "NISSAN OF ELK GROVE",
+                        "ELK GROVE TOYOTA",
+                        "ELK GROVE DODGE",
+                        "INFINITI OF ELK GROVE",
+                        "ELK GROVE ACURA",
+                        "ELK GROVE FORD",
+                        "ELK GROVE VOLKSWAGEN",
+                        "ELK GROVE BUICK GMC",
+                        "ELK GROVE AUDI",
+                        "NIELLO BMW ELK GROVE / SACRAMENTO")
+
+                         
+CrossSellRefined$Group <- ifelse(trim(CrossSellRefined$SELLER) %in% Roseville.Auto.Mall, "Roseville Auto Mall",
+                                 ifelse(trim(CrossSellRefined$SELLER) %in% Folsom.Auto.Mall, "Folsom Auto Mall",
+                                        ifelse(trim(CrossSellRefined$SELLER) %in% Elk.Grove.Auto.Mall, "Elk Grove Auto Mall", "Other")))
+table(CrossSellRefined$Group)
+rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall)
+
 #Export Results
 #write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CrossSellThroughMAY2015withFleet.csv")
-write.csv(CrossSellRefined, "~/Data/Cross Sell/Data/CrossSellThroughMAY2015withFleet.csv")
+
+CrossSellRefined$MON.YEAR <- substr(CrossSellRefined$MON, 1, 4)
+table(CrossSellRefined$MON.YEAR)
+write.csv(CrossSellRefined[CrossSellRefined$MON.YEAR %in% c(2014, 2015, 2016),], "~/Data/Cross Sell/Data/CrossSell2017.csv")
+
+DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 2 & CrossSellRefined$NewUsed == "New",c("MON", "SELLER", "Geography", "Group", "NewUsed")]
+write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
 
 
