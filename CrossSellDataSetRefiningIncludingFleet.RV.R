@@ -114,9 +114,8 @@ Roseville.Auto.Mall <- c("NIELLO ACURA - NIELLO VOLVO SACRAMENTO",
                          "ROSEVILLE VOLKSWAGEN",
                          "FUTURE NISSAN",
                          "SACRAMENTO INFINITI",
-                         "ROSEVILLE TOYOTA")
-
-Roseville.Auto.Mall.Autonation <- c("AUTONATION BMW ROSEVILLE", 
+                         "ROSEVILLE TOYOTA",
+                         "AUTONATION BMW ROSEVILLE", 
                          "AUTONATION CHRY DODGE JEEP RAM ROSEVILLE", 
                          "AUTONATION FIAT ROSEVILLE",
                          "AUTONATION HONDA ROSEVILLE", 
@@ -148,14 +147,31 @@ Elk.Grove.Auto.Mall <- c("MAITA CHEVROLET",
                         "ELK GROVE AUDI",
                         "NIELLO BMW ELK GROVE / SACRAMENTO")
 
+Fulton.Auto.Mall <- c("HARROLD FORD",
+                      "KUNI CHEVROLET CADILLAC",
+                      "LEXUS OF SACRAMENTO",
+                      "LUTES MITSUBISHI",
+                      "MAITA MAZDA SUBARU",
+                      "MAITAS TOYOTA OF SACRAMENTO",
+                      "MEL RAPTON HONDA",
+                      "MERCEDES BENZ OF SACRAMENTO",
+                      "NIELLO AUDI",
+                      "NIELLO AUDI LAND ROVER JAGUAR SACRAMENTO",
+                      "NIELLO BMW ELK GROVE / SACRAMENTO",
+                      "NIELLO BMW ELK GROVE/NIELLO BMW MINI SAC",
+                      "NIELLO FIAT - MASERATI OF SACRAMENTO",
+                      "NIELLO VOLKSWAGEN",
+                      "NISSAN OF SACRAMENTO",
+                      "SACRAMENTO CHRYSLER DODGE JEEP RAM")
 
-                         
+#table(grep("SACRAMENTO CHRYSLER", CrossSellRefined$SELLER, value='TRUE'))
+
 CrossSellRefined$Group <- ifelse(trim(CrossSellRefined$SELLER) %in% Roseville.Auto.Mall, "Roseville Auto Mall",
-                                 ifelse(trim(CrossSellRefined$SELLER) %in% Roseville.Auto.Mall, "Roseville Auto Mall",
-                                    ifelse(trim(CrossSellRefined$SELLER) %in% Folsom.Auto.Mall, "Folsom Auto Mall",
-                                        ifelse(trim(CrossSellRefined$SELLER) %in% Elk.Grove.Auto.Mall, "Elk Grove Auto Mall", "Other")))
-table(CrossSellRefined$Group)
-rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall)
+                            ifelse(trim(CrossSellRefined$SELLER) %in% Folsom.Auto.Mall, "Folsom Auto Mall",
+                              ifelse(trim(CrossSellRefined$SELLER) %in% Elk.Grove.Auto.Mall, "Elk Grove Auto Mall", 
+                                ifelse(trim(CrossSellRefined$SELLER) %in% Fulton.Auto.Mall, "Fulton Auto Mall", "Other"))))
+
+rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall, Fulton.Auto.Mall)
 
 #Export Results
 #write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CrossSellThroughMAY2015withFleet.csv")

@@ -144,24 +144,39 @@ Elk.Grove.Auto.Mall <- c("MAITA CHEVROLET",
                         "ELK GROVE FORD",
                         "ELK GROVE VOLKSWAGEN",
                         "ELK GROVE BUICK GMC",
-                        "ELK GROVE AUDI",
-                        "NIELLO BMW ELK GROVE / SACRAMENTO")
+                        "ELK GROVE AUDI")
 
-                         
+Fulton.Auto.Mall <- c("HARROLD FORD",
+                      "KUNI CHEVROLET CADILLAC",
+                      "LEXUS OF SACRAMENTO",
+                      "LUTES MITSUBISHI",
+                      "MAITA MAZDA SUBARU",
+                      "MAITAS TOYOTA OF SACRAMENTO",
+                      "MEL RAPTON HONDA",
+                      "MERCEDES BENZ OF SACRAMENTO",
+                      "NIELLO AUDI",
+                      "NIELLO AUDI LAND ROVER JAGUAR SACRAMENTO",
+                      "NIELLO FIAT - MASERATI OF SACRAMENTO",
+                      "NIELLO VOLKSWAGEN",
+                      "NISSAN OF SACRAMENTO",
+                      "SACRAMENTO CHRYSLER DODGE JEEP RAM")
+
 CrossSellRefined$Group <- ifelse(trim(CrossSellRefined$SELLER) %in% Roseville.Auto.Mall, "Roseville Auto Mall",
                                  ifelse(trim(CrossSellRefined$SELLER) %in% Folsom.Auto.Mall, "Folsom Auto Mall",
-                                        ifelse(trim(CrossSellRefined$SELLER) %in% Elk.Grove.Auto.Mall, "Elk Grove Auto Mall", "Other")))
+                                        ifelse(trim(CrossSellRefined$SELLER) %in% Elk.Grove.Auto.Mall, "Elk Grove Auto Mall", 
+                                               ifelse(trim(CrossSellRefined$SELLER) %in% Fulton.Auto.Mall, "Fulton Auto Mall", "Other"))))
+
 table(CrossSellRefined$Group)
-rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall)
+
+rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall, Fulton.Auto.Mall)
 
 #Export Results
 #write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CrossSellThroughMAY2015withFleet.csv")
 
 CrossSellRefined$MON.YEAR <- substr(CrossSellRefined$MON, 1, 4)
-table(CrossSellRefined$MON.YEAR)
-write.csv(CrossSellRefined[CrossSellRefined$MON.YEAR %in% c(2014, 2015, 2016),], "~/Data/Cross Sell/Data/CrossSell2017.csv")
+write.csv(CrossSellRefined, "~/Data/Cross Sell/Data/CrossSell.v2.csv")
 
-DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 2 & CrossSellRefined$NewUsed == "New",c("MON", "SELLER", "Geography", "Group", "NewUsed")]
-write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
+#DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 2 & CrossSellRefined$NewUsed == "New",c("MON", "SELLER", "Geography", "Group", "NewUsed")]
+#write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
 
 
