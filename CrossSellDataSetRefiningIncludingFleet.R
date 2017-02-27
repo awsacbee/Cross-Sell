@@ -174,7 +174,7 @@ rm(Roseville.Auto.Mall, Folsom.Auto.Mall, Elk.Grove.Auto.Mall, Fulton.Auto.Mall)
 #write.csv(CrossSellRefined, "C:/Users/awelden/Google Drive/MAD Science/Internal Tools/CrossSell/Data/CrossSellThroughMAY2015withFleet.csv")
 
 CrossSellRefined$MON.YEAR <- substr(CrossSellRefined$MON, 1, 4)
-write.csv(CrossSellRefined, "~/Data/Cross Sell/Data/CrossSell.v2.csv")
+write.csv(CrossSellRefined, "~/Data/Cross Sell/Data/CrossSellThroughMAY2015withFleet.csv")
 
 #DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 2 & CrossSellRefined$NewUsed == "New",c("MON", "SELLER", "Geography", "Group", "NewUsed")]
 #write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
