@@ -1,5 +1,14 @@
 CrossSell <- read.csv("~/Data/Cross Sell/Data/CSMaster.txt")
 
+# Create a Temp Cross sell with only 2015/2016 - only needed to do once
+#toMatch <- c("2016", "2017")
+#matches <- unique(grep(paste(toMatch,collapse="|"), 
+#                       CrossSell$MON, value=TRUE))
+#CrossSell <- CrossSell[CrossSell$MON %in% matches,]
+#table(CrossSell$MON) # Check for dupes!
+
+#rm(toMatch, matches)
+
 head(CrossSell)
 #Create unique indicator
 table(CrossSell$MON) # Jan got duped
@@ -14,7 +23,7 @@ names(CrossSell)
 CrossSell$X <- NULL
 CrossSell$X.1 <- NULL
 
-CrossSellNewAppend <- read.delim("~/Data/Cross Sell/Data/CA1803.txt")
+CrossSellNewAppend <- read.delim("~/Data/Cross Sell/Data/CA1803N.txt")
 CrossSellOldAppend <- read.delim("~/Data/Cross Sell/Data/CA1124U.txt")
 
 CrossSellOldAppend$NewUsed <- "Used"
@@ -179,4 +188,6 @@ write.csv(CrossSellRefined, "~/Data/Cross Sell/Data/CrossSellThroughMAY2015withF
 #DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 2 & CrossSellRefined$NewUsed == "New",c("MON", "SELLER", "Geography", "Group", "NewUsed")]
 #write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
 
+DealerCheck <- CrossSellRefined[CrossSellRefined$Geography == 1 & (CrossSellRefined$NewUsed == "New" | CrossSellRefined$NewUsed == "Used") & CrossSellRefined$SELLER == "CHASE CHEVROLET",]
+write.csv(DealerCheck, "~/Data/Cross Sell/Data/DealerCheck.csv", row.names = FALSE)
 
