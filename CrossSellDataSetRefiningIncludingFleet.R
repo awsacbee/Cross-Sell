@@ -26,6 +26,9 @@ CrossSell$X.1 <- NULL
 CrossSellNewAppend <- read.delim("~/Data/Cross Sell/Data/CA1803N.txt")
 CrossSellOldAppend <- read.delim("~/Data/Cross Sell/Data/CA1124U.txt")
 
+names(CrossSellNewAppend) <- toupper(names(CrossSellNewAppend))
+names(CrossSellOldAppend) <- toupper(names(CrossSellOldAppend))
+
 CrossSellOldAppend$NewUsed <- "Used"
 CrossSellNewAppend$NewUsed <- "New"
 
